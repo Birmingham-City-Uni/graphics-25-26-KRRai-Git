@@ -1,0 +1,5 @@
+C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/CMakeFiles/Task1.dir
+C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/CMakeFiles/Task2.dir
+C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/CMakeFiles/ALL_BUILD.dir
+C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/CMakeFiles/ZERO_CHECK.dir
+C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/3rdParty/lodepng/CMakeFiles/lodepng.dir

@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/cmake_install.cmake",
+		"C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/3rdParty/cmake_install.cmake",
+		"C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/3rdParty/lodepng/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
