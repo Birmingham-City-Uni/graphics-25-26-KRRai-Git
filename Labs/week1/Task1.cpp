@@ -1,7 +1,22 @@
 #include <iostream>
 #include <lodepng.h>
 
+	void setPixel(std::vector<uint8_t>&imageBuffer,
+		int width, int height,
+		int x, int y,
+		uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+	{
+		if (x < 0 || x >= width || y < 0 || y >= height)
+			return;
 
+		const int nChannels = 4;
+		int pixelIdx = (y * width + x) * nChannels;
+
+		imageBuffer[pixelIdx + 0] = r; // Red
+		imageBuffer[pixelIdx + 1] = g; // Green
+		imageBuffer[pixelIdx + 2] = b; // Blue
+		imageBuffer[pixelIdx + 3] = a; // Alpha
+	}
 int main()
 {
 	std::string outputFilename = "output.png";
@@ -19,13 +34,30 @@ int main()
 	for(int y = 0; y < height; ++y) 
 		for (int x = 0; x < width; ++x) {
 			int pixelIdx = x + y * width;
-			imageBuffer[pixelIdx * nChannels + 0] = 0; // Set red pixel values to 0
-			imageBuffer[pixelIdx * nChannels + 1] = 255; // Set green pixel values to 255 (full brightness)
-			imageBuffer[pixelIdx * nChannels + 2] = 255; // Set blue pixel values to 255 (full brightness)
-			imageBuffer[pixelIdx * nChannels + 3] = 255; // Set  alpha (transparency) pixel values to 255 (fully opaque)
+			setPixel(imageBuffer, width, height,
+				x, y,
+				0, 255, 255, 255);
 
 		}
-	for (int y = 560; y < height; ++y)
+
+	for (int y = 100; y < height; ++y)
+		for (int x = 1000; x < width; ++x) {
+			int pixelIdx = x + y * width;
+			setPixel(imageBuffer, width, height,
+				x, y,
+				0, 50, 255, 255);
+
+		}
+
+	for (int y = 500; y < height; ++y)
+		for (int x = 0; x < width; ++x) {
+			int pixelIdx = x + y * width;
+			setPixel(imageBuffer, width, height,
+				x, y,
+				0, 255, 0, 255);
+
+		}
+		/*for (int y = 560; y < height; ++y)
 		for (int x = 0; x < width; ++x) {
 			int pixelIdx = x + y * width;
 			imageBuffer[pixelIdx * nChannels + 0] = 0; // Set red pixel values to 0
@@ -33,16 +65,21 @@ int main()
 			imageBuffer[pixelIdx * nChannels + 2] = 0; // Set blue pixel values to 255 (full brightness)
 			imageBuffer[pixelIdx * nChannels + 3] = 255; // Set alpha (transparency) pixel values to 255 (fully opaque)
 
-		}
+		}*/
 
 	/// *** Lab Tasks ***
-	// * Task 1: Try adapting the code above to set the lower half of the image to be a green colour.
+	// * Task 1: Try adapting the code above to set the lower half of the image to be a green colour. (COMPLETE)
+	
+
+
+
 	// * Task 2: Doing the maths above to work out indices is a bit annoying! Write your own setPixel function.
 	//           This should take x and y coordinates as input, and red, green, blue and alpha values.
 	//           Remember to pass in your imageBuffer. Should it be passed in by reference or by value? Should
 	//           the reference be const?
 	//           We will use this setPixel function to build our rasteriser in the upcoming labs.
 	//			 Test your setPixel function by setting pixels in your image to different colours.
+
 	// * Optional Task 3: Use your setPixel function to draw a circle in the centre of the image. Remember a point is
 	//           in a circle if sqrt((x - x_0)^2 + (y - y_0)^2) < radius (here x_0, y_0 are the coordinates at the middle of 
 	//           the circle). 
@@ -62,9 +99,12 @@ int main()
 	// PNG files are compressed to save storage space. 
 	// The lodepng::encode function applies this compression to the image buffer and saves the result 
 	// to the filename given.
+
+
+
 	int errorCode;
 	errorCode = lodepng::encode(outputFilename, imageBuffer, width, height);
-	if (errorCode) { // check the error code, in case an error occurred.
+	if (errorCode) { // check the error code, in case an error occurred.	
 		std::cout << "lodepng error encoding image: " << lodepng_error_text(errorCode) << std::endl;
 		return errorCode;
 	}
