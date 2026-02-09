@@ -1,0 +1,10 @@
+^C:\USERS\S24118569\DOCUMENTS\GITHUB\GRAPHICS-25-26-KRRAI-GIT\LABS\WEEK1\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1 -BC:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1 --check-stamp-file C:/Users/S24118569/Documents/GitHub/graphics-25-26-KRRai-Git/Labs/week1/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

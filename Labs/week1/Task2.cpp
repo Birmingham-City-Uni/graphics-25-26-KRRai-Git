@@ -4,13 +4,18 @@
 
 int main()
 {
-	std::string inputFilename = "../images/stanford_bunny.png";
+	std::string inputFilename = "./images/stanford_bunny.png";
 	std::string outputFilename = "output_bunny.png";
 
 	std::vector<uint8_t> imageBuffer;
 	unsigned int width, height;
-	lodepng::decode(imageBuffer, width, height, inputFilename);
-	
+	lodepng::decode(imageBuffer, width , height , inputFilename);
+
+
+	width = width / 2;
+	height = height / 2;
+
+
 	// *** Tasks ***
 	// This code loads an image from a png file. This is an image of the famous 
 	// Stanford Bunny https://engineering.stanford.edu/magazine/tale-ubiquitous-stanford-bunny
@@ -19,11 +24,12 @@ int main()
 	// If you'd like, you can use the setPixel function you wrote in the previous task.
 	// The code below reduces the brightness of the image by 0.5x, as an example.
 
+
 	for(int y = 0; y < height; ++y) 
 		for (int x = 0; x < width; ++x) 
 			for (int c = 0; c < 3; ++c) {
 				int pixelIdx = x + y * width;
-				imageBuffer[pixelIdx * 4 + c] *= 0.5;
+				imageBuffer[pixelIdx * 4 + c] = 255 - imageBuffer[pixelIdx * 4 + c];
 			}
 
 	// Once you have tested this code, comment out the for loops above and try the following tasks:

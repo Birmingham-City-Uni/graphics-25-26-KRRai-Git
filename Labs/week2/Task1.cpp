@@ -64,6 +64,11 @@ int main()
 	{
 		std::getline(bunnyFile, line);
 		// *** YOUR CODE HERE ***
+		std::string str = line.substr(0, 2);
+		if (str == "v") {
+
+			std::cout << line << std::endl;
+		}
 
 		// Process each line of the file
 		// Load it into a new Vector3, if the line starts with a V
@@ -83,6 +88,8 @@ int main()
 		//         big enough to see.
 
 		// *** YOUR CODE HERE ***
+
+
 	}
 
 

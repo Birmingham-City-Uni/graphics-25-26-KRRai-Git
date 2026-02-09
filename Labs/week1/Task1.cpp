@@ -40,14 +40,6 @@ int main()
 
 		}
 
-	for (int y = 100; y < height; ++y)
-		for (int x = 1000; x < width; ++x) {
-			int pixelIdx = x + y * width;
-			setPixel(imageBuffer, width, height,
-				x, y,
-				0, 50, 255, 255);
-
-		}
 
 	for (int y = 500; y < height; ++y)
 		for (int x = 0; x < width; ++x) {
@@ -55,6 +47,15 @@ int main()
 			setPixel(imageBuffer, width, height,
 				x, y,
 				0, 255, 0, 255);
+
+		}
+
+	for (int y = 200; y < height; ++y)
+		for (int x = 540; x < width; ++x) {
+			int pixelIdx = x + y * width;
+			setPixel(imageBuffer, width, height,
+				x, y,
+				0, 0, 0, 255);
 
 		}
 		/*for (int y = 560; y < height; ++y)

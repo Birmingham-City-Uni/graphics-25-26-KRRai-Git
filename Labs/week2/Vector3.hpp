@@ -17,6 +17,9 @@ public:
 	Vector3()
 	{
 		// YOUR CODE HERE
+		int x = 0;
+		int y = 0;
+		int z = 0;
 	}
 
 	// This constructor can be used to set the x, y and z components of a vector when it
@@ -25,18 +28,33 @@ public:
 	Vector3(float x, float y, float z)
 	{
 		// YOUR CODE HERE
+
+		x = x_;
+		y = y_;
+		z = z_;
 	}
 
 	// Implement this method to add two vectors.
 	Vector3 operator+(const Vector3& other) const
 	{
 		// YOUR CODE HERE
+		return Vector3(
+			x_ + other.x_,
+			y_ + other.y_,
+			z_ + other.z_
+		);
+
 	}
 
 	// Multiply the vector by a scalar.
 	Vector3 operator*(float scalar) const
 	{
 		// YOUR CODE HERE
+
+		x_* scalar;
+		y_* scalar;
+		z_* scalar;
+		return Vector3(x_, y_, z_);
 	}
 
 	// Get a component of the vector
@@ -49,6 +67,14 @@ public:
 	float& operator[](int i)
 	{
 		// YOUR CODE HERE
+		switch (i)
+		{
+		case 0: return x_;
+		case 1: return y_;
+		case 2: return z_;
+		default:
+			throw std::out_of_range("Vector3 index cannot be founnd");
+		}
 	}
 
 	// This is the const version of the [] operator.
@@ -57,6 +83,14 @@ public:
 	float operator[](int i) const
 	{
 		// YOUR CODE HERE
+		switch (i)
+		{
+		case 0: return x_;
+		case 1: return y_;
+		case 2: return z_;
+		default:
+			throw std::out_of_range("Vector3 index cannot be found");
+		}
 	}
 
 	// I have already written these getters for you.

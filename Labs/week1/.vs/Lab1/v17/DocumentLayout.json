@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\S24118569\\Documents\\GitHub\\graphics-25-26-KRRai-Git\\Labs\\week1\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{09EF101C-1F24-3099-ADF8-912115696D96}|Task2.vcxproj|C:\\Users\\S24118569\\Documents\\GitHub\\graphics-25-26-KRRai-Git\\Labs\\week1\\Task2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{09EF101C-1F24-3099-ADF8-912115696D96}|Task2.vcxproj|solutionrelative:Task2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F88FF762-9ABA-3FD2-A193-C31EF3D7EA9E}|Task1.vcxproj|C:\\Users\\S24118569\\Documents\\GitHub\\graphics-25-26-KRRai-Git\\Labs\\week1\\Task1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{F88FF762-9ABA-3FD2-A193-C31EF3D7EA9E}|Task1.vcxproj|solutionrelative:Task1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -27,19 +31,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Task2.cpp",
+              "DocumentMoniker": "C:\\Users\\S24118569\\Documents\\GitHub\\graphics-25-26-KRRai-Git\\Labs\\week1\\Task2.cpp",
+              "RelativeDocumentMoniker": "Task2.cpp",
+              "ToolTip": "C:\\Users\\S24118569\\Documents\\GitHub\\graphics-25-26-KRRai-Git\\Labs\\week1\\Task2.cpp",
+              "RelativeToolTip": "Task2.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-09T14:26:16.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Task1.cpp",
               "DocumentMoniker": "C:\\Users\\S24118569\\Documents\\GitHub\\graphics-25-26-KRRai-Git\\Labs\\week1\\Task1.cpp",
               "RelativeDocumentMoniker": "Task1.cpp",
               "ToolTip": "C:\\Users\\S24118569\\Documents\\GitHub\\graphics-25-26-KRRai-Git\\Labs\\week1\\Task1.cpp",
               "RelativeToolTip": "Task1.cpp",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAADUAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAADkAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-01-26T16:19:13.982Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "CMakeLists.txt",
               "DocumentMoniker": "C:\\Users\\S24118569\\Documents\\GitHub\\graphics-25-26-KRRai-Git\\Labs\\week1\\CMakeLists.txt",
               "RelativeDocumentMoniker": "CMakeLists.txt",
