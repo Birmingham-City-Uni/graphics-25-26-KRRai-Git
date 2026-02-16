@@ -62,18 +62,35 @@ int main()
 	std::string line;
 	while (!bunnyFile.eof())
 	{
-		std::getline(bunnyFile, line);
-		// *** YOUR CODE HERE ***
-		std::string str = line.substr(0, 2);
-		if (str == "v") {
 
-			std::cout << line << std::endl;
+		std::string line;
+		while (!bunnyFile.eof())
+		{
+			std::getline(bunnyFile, line);
+			// *** YOUR CODE HERE ***
+			std::stringstream ss(line);
+
+			char type;
+			ss >> type;
+
+
+			if (type == 'v')
+			{
+				Vector3 vertex;
+				ss >> vertex.x() >> vertex.y() >> vertex.z();
+
+				vertices.push_back(vertex);
+
+				std::cout << "v" << vertex << std::endl;
+			}
+
+			// Process each line of the file
+			// Load it into a new Vector3, if the line starts with a V
+			// Push this back into the std::vector of vertices
+			// For debugging, maybe print out the vector too!
+
 		}
 
-		// Process each line of the file
-		// Load it into a new Vector3, if the line starts with a V
-		// Push this back into the std::vector of vertices
-		// For debugging, maybe print out the vector too!
 	}
 
 	for (auto& v : vertices) {
@@ -89,6 +106,13 @@ int main()
 
 		// *** YOUR CODE HERE ***
 
+		 // Scale and center the mesh
+		int scale = 200;
+
+		int x = static_cast<int>(v.x() * scale + width / 2);
+		int y = static_cast<int>(v.y() * -scale + height / 2);
+		// Make sure pixel is inside bounds
+		setPixel(imageBuffer, x, y, width, height, 255, 255, 255);
 
 	}
 
