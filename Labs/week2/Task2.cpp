@@ -27,8 +27,12 @@ void drawLine(std::vector<uint8_t>& image, int width, int height, int startX, in
 	//Step 1: work out the gradient
 	float gradient;
 
+	float dx = (float)endX - startX;
+	float dy = (float)endY - startY;
+
+
 	// Step 2: check if it's steep (i.e. absolute value bigger than 1;)
-	bool steep;
+	bool steep = std::abs(dy) > std::abs(dx);
 
 	if (steep) {
 		// Step 3: The steep version of the code, iterating over Y
