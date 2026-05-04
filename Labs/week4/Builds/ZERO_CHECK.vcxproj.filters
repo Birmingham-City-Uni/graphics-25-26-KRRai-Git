@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week4\Builds\CMakeFiles\4a7bfb8c17b6af1c201488a732e9d9dd\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F808AD9F-1C9D-3D75-B01D-930A66CB1360}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Task1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Mesh.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Light.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\LinAlg.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Image.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Shading.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{04E2FDAB-8F97-303B-AA12-825D74249014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9629BB7F-4979-3D0D-AEBA-69D009235898}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

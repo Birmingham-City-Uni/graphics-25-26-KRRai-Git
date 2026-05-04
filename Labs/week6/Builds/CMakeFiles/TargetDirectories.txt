@@ -1,0 +1,4 @@
+E:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6/Builds/CMakeFiles/Task1.dir
+E:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6/Builds/CMakeFiles/ALL_BUILD.dir
+E:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6/Builds/CMakeFiles/ZERO_CHECK.dir
+E:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6/Builds/3rdParty/lodepng/CMakeFiles/lodepng.dir

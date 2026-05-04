@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week5\3rdParty\lodepng\lodepng.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week5\3rdParty\lodepng\lodepng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week5\3rdParty\lodepng\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{F79495F1-55EE-3D07-B537-A4BA6114F29B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6F8862FA-EF0C-3914-861C-88A8D2A081DB}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
