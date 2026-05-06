@@ -31,7 +31,7 @@ struct Triangle {
 };
 
 
-Eigen::Matrix4f projectionMatrix(int height, int width, float horzFov = 70.f*M_PI/180.f, float zFar = 10.f, float zNear = 0.1f)
+Eigen::Matrix4f projectionMatrix(int height, int width, float horzFov = 70.f * M_PI / 180.f, float zFar = 10.f, float zNear = 0.1f)
 {
 	float vertFov = horzFov * float(height) / width;
 	Eigen::Matrix4f projection;
@@ -52,10 +52,10 @@ void findScreenBoundingBox(const Triangle& t, int width, int height, int& minX, 
 	maxY = std::max(std::max(t.screen[0].y(), t.screen[1].y()), t.screen[2].y());
 
 	// Constrain it to lie within the image.
-	minX = std::min(std::max(minX, 0), width-1);
-	maxX = std::min(std::max(maxX, 0), width-1);
-	minY = std::min(std::max(minY, 0), height-1);
-	maxY = std::min(std::max(maxY, 0), height-1);
+	minX = std::min(std::max(minX, 0), width - 1);
+	maxX = std::min(std::max(maxX, 0), width - 1);
+	minY = std::min(std::max(minY, 0), height - 1);
+	maxY = std::min(std::max(maxY, 0), height - 1);
 }
 
 
@@ -63,7 +63,7 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 	std::vector<float>& zBuffer,
 	const Triangle& t,
 	const std::vector<std::unique_ptr<Light>>& lights,
-	const Eigen::Vector3f &albedo, const Eigen::Vector3f &specularColor,
+	const Eigen::Vector3f& albedo, const Eigen::Vector3f& specularColor,
 	float specularExponent,
 	ShadingMode shadingMode,
 	const Eigen::Vector3f& camWorldPos)
@@ -80,7 +80,7 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 		return;
 	}
 
-	for(int x = minX; x <= maxX; ++x) 
+	for (int x = minX; x <= maxX; ++x)
 		for (int y = minY; y <= maxY; ++y) {
 			Eigen::Vector2f p(x, y);
 
@@ -106,25 +106,32 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 			// Replace with perspective-correct, following the steps below
 
 			// Get the depths from the camera-space position of the 3 corners.
-			float depth0 = 0.f, depth1 = 0.f, depth2 = 0.f;
-			
+			float depth0 = t.cam[0].z();
+			float depth1 = t.cam[1].z();
+			float depth2 = t.cam[2].z();
+
 			// Work out the depth at the point P
-			float depthP = 0.f;
+			float w0 = 1.0f / depth0;
+			float w1 = 1.0f / depth1;
+			float w2 = 1.0f / depth2;
+
+			float denom = b0 * w0 + b1 * w1 + b2 * w2;
+			float depthP = 1.0f / denom;
 
 			// Interpolate to find the world-space position of this pixel (correct this version to be 
 			// perspective-correct).
 			// Don't forget to multiply by depthP!
-			Eigen::Vector3f worldP = Eigen::Vector3f::Zero();
+			Eigen::Vector3f worldP = (b0 * w0 * t.verts[0] + b1 * w1 * t.verts[1] + b2 * w2 * t.verts[2]) * depthP;
 
 			// Interpolate to find the normal of this pixel (correct this version to be 
 			// perspective-correct).
 			// Tip: you don't need to worry about multiplying by depthP - you'll normalise this anyway!
-			Eigen::Vector3f normP = Eigen::Vector3f::Zero();
+			Eigen::Vector3f normP = (b0 * w0 * t.norms[0] + b1 * w1 * t.norms[1] + b2 * w2 * t.norms[2]).normalized();
 
 			// Interpolate to find the correct clip-space depth (correct this version to be perspective-correct)
-			// This won't make too much of a difference in this case, but technically this version does use slightly
+			// This won't make much of a difference in this case, but technically this version does use slightly
 			// incorrect depths.
-			float depth = 0.f;
+			float depth = (b0 * w0 * t.screen[0].z() + b1 * w1 * t.screen[1].z() + b2 * w2 * t.screen[2].z()) * depthP;
 			// *** END YOUR CODE ***
 
 			int depthIdx = static_cast<int>(p.x()) + static_cast<int>(p.y()) * width;
@@ -171,7 +178,7 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 					diffuseOut = coeffWiseMultiply(diffuseOut, albedo);
 
 					color += specularOut;
-					//color += diffuseOut;
+					color += diffuseOut;
 					//color = (incomingLightDir + Eigen::Vector3f::Ones()) / 2;
 				}
 				else {
@@ -185,9 +192,9 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 
 			Color c;
 			// Gamma-correcting colours.
-			c.r = std::min(powf(color.x(), 1/2.2f), 1.0f) * 255;
-			c.g = std::min(powf(color.y(), 1/2.2f), 1.0f) * 255;
-			c.b = std::min(powf(color.z(), 1/2.2f), 1.0f) * 255;
+			c.r = std::min(powf(color.x(), 1 / 2.2f), 1.0f) * 255;
+			c.g = std::min(powf(color.y(), 1 / 2.2f), 1.0f) * 255;
+			c.b = std::min(powf(color.z(), 1 / 2.2f), 1.0f) * 255;
 
 			c.a = 255;
 
@@ -199,14 +206,14 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 
 void drawMesh(std::vector<unsigned char>& image,
 	std::vector<float>& zBuffer,
-	const Mesh& mesh, 
-	const Eigen::Vector3f &albedo, const Eigen::Vector3f &specularColor,
+	const Mesh& mesh,
+	const Eigen::Vector3f& albedo, const Eigen::Vector3f& specularColor,
 	float specularExponent,
 	ShadingMode shadingMode,
 	const Eigen::Vector3f& camWorldPos,
-	const Eigen::Matrix4f& modelToWorld, 
-	const Eigen::Matrix4f& worldToCam, 
-	const Eigen::Matrix4f& camToClip, 
+	const Eigen::Matrix4f& modelToWorld,
+	const Eigen::Matrix4f& worldToCam,
+	const Eigen::Matrix4f& camToClip,
 	const std::vector<std::unique_ptr<Light>>& lights,
 	int width, int height)
 {
@@ -269,7 +276,7 @@ int drawScene(const std::string& outputFilename, ShadingMode mode, float specula
 	// This std::vector has one 8-bit value for each pixel in each row and column of the image, and
 	// for each of the 4 channels (red, green, blue and alpha).
 	// Remember 8-bit unsigned values can range from 0 to 255.
-	std::vector<uint8_t> imageBuffer(height*width*nChannels);
+	std::vector<uint8_t> imageBuffer(height * width * nChannels);
 	std::vector<float> zBuffer(height * width);
 
 	// This line sets the image to black initially.
@@ -306,10 +313,10 @@ int drawScene(const std::string& outputFilename, ShadingMode mode, float specula
 
 	Mesh planeMesh = loadMeshFile(planeFilename);
 
-	Eigen::Matrix4f planeTransform; 
+	Eigen::Matrix4f planeTransform;
 	planeTransform = translationMatrix(Eigen::Vector3f(0.0f, -1.0f, 3.f)) * scaleMatrix(1.4f);
-	drawMesh(imageBuffer, zBuffer, planeMesh, Eigen::Vector3f(0.f, 0.5f, 0.8f), 
-		Eigen::Vector3f::Ones()*1.0f, specularExponent, mode, camWorldPos,
+	drawMesh(imageBuffer, zBuffer, planeMesh, Eigen::Vector3f(0.f, 0.5f, 0.8f),
+		Eigen::Vector3f::Ones() * 1.0f, specularExponent, mode, camWorldPos,
 		planeTransform, worldToCamera, projection, lights, width, height);
 
 	// For debug - draw point lights as colored circles so we can see where they are

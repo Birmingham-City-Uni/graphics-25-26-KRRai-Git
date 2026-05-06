@@ -1,0 +1,10 @@
+^E:\GITHUB\NEWSPEEDGAME\GRAPHICS-25-26-KRRAI-GIT\LABS\WEEK6\BUILDS\CMAKEFILES\597EC4BE102C6D4FBE7FEA6959C7F184\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6 -BE:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6/Builds --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file E:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6/Builds/Lab6.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

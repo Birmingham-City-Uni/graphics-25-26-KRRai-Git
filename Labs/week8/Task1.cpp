@@ -27,7 +27,7 @@ struct Triangle {
 };
 
 
-Eigen::Matrix4f projectionMatrix(int height, int width, float horzFov = 70.f*M_PI/180.f, float zFar = 10.f, float zNear = 0.1f)
+Eigen::Matrix4f projectionMatrix(int height, int width, float horzFov = 70.f * M_PI / 180.f, float zFar = 10.f, float zNear = 0.1f)
 {
 	float vertFov = horzFov * float(height) / width;
 	Eigen::Matrix4f projection;
@@ -48,10 +48,10 @@ void findScreenBoundingBox(const Triangle& t, int width, int height, int& minX, 
 	maxY = std::max(std::max(t.screen[0].y(), t.screen[1].y()), t.screen[2].y());
 
 	// Constrain it to lie within the image.
-	minX = std::min(std::max(minX, 0), width-1);
-	maxX = std::min(std::max(maxX, 0), width-1);
-	minY = std::min(std::max(minY, 0), height-1);
-	maxY = std::min(std::max(maxY, 0), height-1);
+	minX = std::min(std::max(minX, 0), width - 1);
+	maxX = std::min(std::max(maxX, 0), width - 1);
+	minY = std::min(std::max(minY, 0), height - 1);
+	maxY = std::min(std::max(maxY, 0), height - 1);
 }
 
 
@@ -59,7 +59,7 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 	std::vector<float>& zBuffer,
 	const Triangle& t,
 	const std::vector<std::unique_ptr<Light>>& lights,
-	const Eigen::Vector3f &albedo, const Eigen::Vector3f &specularColor,
+	const Eigen::Vector3f& albedo, const Eigen::Vector3f& specularColor,
 	float specularExponent,
 	const Eigen::Vector3f& camWorldPos)
 {
@@ -75,7 +75,7 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 		return;
 	}
 
-	for(int x = minX; x <= maxX; ++x) 
+	for (int x = minX; x <= maxX; ++x)
 		for (int y = minY; y <= maxY; ++y) {
 			Eigen::Vector2f p(x, y);
 
@@ -94,7 +94,7 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 			if (sum > 1.0001) {
 				continue;
 			}
-			
+
 			Eigen::Vector3f worldP = t.verts[0] * b0 + t.verts[1] * b1 + t.verts[2] * b2;
 
 			float depth = t.screen[0].z() * b0 + t.screen[1].z() * b1 + t.screen[2].z() * b2;
@@ -122,11 +122,13 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 					// Subtask 3: Work out correct inputs for the phongSpecularTerm function inside drawTriangle, and draw an image!
 					// *** YOUR CODE HERE ***
 					// Work out the incoming light dir (from the light into the surface point).
-					Eigen::Vector3f incomingLightDir = Eigen::Vector3f::Zero();
+					Eigen::Vector3f incomingLightDir = light->getDirection(worldP);
+
 					// Work out the view direction (from surface point towards camera). Make sure it's normalized!
-					Eigen::Vector3f viewDir = Eigen::Vector3f::Zero();
+					Eigen::Vector3f viewDir = (camWorldPos - worldP).normalized();
+
 					// Find the specular term by calling phongSpecularTerm.
-					float specularTerm = 0.f;
+					float specularTerm = phongSpecularTerm(incomingLightDir, viewDir, normP, specularExponent);
 					// *** END YOUR CODE ***
 
 					Eigen::Vector3f specularOut = specularColor * specularTerm;
@@ -154,9 +156,9 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 
 			Color c;
 			// Gamma-correcting colours.
-			c.r = std::min(powf(color.x(), 1/2.2f), 1.0f) * 255;
-			c.g = std::min(powf(color.y(), 1/2.2f), 1.0f) * 255;
-			c.b = std::min(powf(color.z(), 1/2.2f), 1.0f) * 255;
+			c.r = std::min(powf(color.x(), 1 / 2.2f), 1.0f) * 255;
+			c.g = std::min(powf(color.y(), 1 / 2.2f), 1.0f) * 255;
+			c.b = std::min(powf(color.z(), 1 / 2.2f), 1.0f) * 255;
 
 			c.a = 255;
 
@@ -168,12 +170,12 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 
 void drawMesh(std::vector<unsigned char>& image,
 	std::vector<float>& zBuffer,
-	const Mesh& mesh, 
-	const Eigen::Vector3f &albedo, const Eigen::Vector3f &specularColor,
+	const Mesh& mesh,
+	const Eigen::Vector3f& albedo, const Eigen::Vector3f& specularColor,
 	float specularExponent,
 	const Eigen::Vector3f& camWorldPos,
-	const Eigen::Matrix4f& modelToWorld, 
-	const Eigen::Matrix4f& worldToClip, 
+	const Eigen::Matrix4f& modelToWorld,
+	const Eigen::Matrix4f& worldToClip,
 	const std::vector<std::unique_ptr<Light>>& lights,
 	int width, int height)
 {
@@ -235,7 +237,7 @@ int main()
 	// This std::vector has one 8-bit value for each pixel in each row and column of the image, and
 	// for each of the 4 channels (red, green, blue and alpha).
 	// Remember 8-bit unsigned values can range from 0 to 255.
-	std::vector<uint8_t> imageBuffer(height*width*nChannels);
+	std::vector<uint8_t> imageBuffer(height * width * nChannels);
 	std::vector<float> zBuffer(height * width);
 
 	// This line sets the image to black initially.
@@ -275,17 +277,17 @@ int main()
 	Mesh planeMesh = loadMeshFile(planeFilename);
 
 
-	Eigen::Matrix4f bunnyTransform; 
+	Eigen::Matrix4f bunnyTransform;
 	bunnyTransform = translationMatrix(Eigen::Vector3f(0.0f, -1.0f, 3.f)) * rotateYMatrix(M_PI);
 	// .... and change the specular exponent here!
-	drawMesh(imageBuffer, zBuffer, bunnyMesh, Eigen::Vector3f(0.f, 0.5f, 0.8f), 
-		Eigen::Vector3f::Ones()*1.0f, 10.f, camWorldPos,
+	drawMesh(imageBuffer, zBuffer, bunnyMesh, Eigen::Vector3f(0.f, 0.5f, 0.8f),
+		Eigen::Vector3f::Ones() * 1.0f, 10.f, camWorldPos,
 		bunnyTransform, worldToClip, lights, width, height);
 
-	Eigen::Matrix4f planeTransform; 
+	Eigen::Matrix4f planeTransform;
 	planeTransform = translationMatrix(Eigen::Vector3f(0.0f, -1.0f, 3.f)) * scaleMatrix(1.4f);
-	drawMesh(imageBuffer, zBuffer, planeMesh, Eigen::Vector3f(0.f, 0.5f, 0.8f), 
-		Eigen::Vector3f::Ones()*1.0f, 10.f, camWorldPos,
+	drawMesh(imageBuffer, zBuffer, planeMesh, Eigen::Vector3f(0.f, 0.5f, 0.8f),
+		Eigen::Vector3f::Ones() * 1.0f, 10.f, camWorldPos,
 		planeTransform, worldToClip, lights, width, height);
 
 	// For debug - draw point lights as colored circles so we can see where they are

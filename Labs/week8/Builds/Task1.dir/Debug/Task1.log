@@ -1,0 +1,11 @@
+﻿  Task1.cpp
+E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Image.hpp(81,23): warning C4838: conversion from 'float' to 'uint8_t' requires a narrowing conversion
+  (compiling source file '../Task1.cpp')
+  
+E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Image.hpp(82,23): warning C4838: conversion from 'float' to 'uint8_t' requires a narrowing conversion
+  (compiling source file '../Task1.cpp')
+  
+E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Image.hpp(83,23): warning C4838: conversion from 'float' to 'uint8_t' requires a narrowing conversion
+  (compiling source file '../Task1.cpp')
+  
+  Task1.vcxproj -> E:\Github\NewSpeedGame\graphics-25-26-KRRai-Git\Labs\week8\Builds\Debug\Task1.exe

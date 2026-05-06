@@ -1,0 +1,10 @@
+^E:\GITHUB\NEWSPEEDGAME\GRAPHICS-25-26-KRRAI-GIT\LABS\WEEK6\3RDPARTY\LODEPNG\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6 -BE:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6/Builds --check-stamp-file E:/Github/NewSpeedGame/graphics-25-26-KRRai-Git/Labs/week6/Builds/3rdParty/lodepng/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
