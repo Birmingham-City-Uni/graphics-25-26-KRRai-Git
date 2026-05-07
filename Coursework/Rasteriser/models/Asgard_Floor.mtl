@@ -1,0 +1,67 @@
+# Blender 5.0.1 MTL File: 'AsgardC03_Compressed_W_Spidey.blend'
+# www.blender.org
+
+newmtl MI_AsgardC01Floor03.mat_4d689869
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl MI_AsgardE01Pillar006A.mat_2386b016
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd H:/T_AsgardE01Pillar006A_D.png
+map_Bump -bm 1.000000 C:/T_AsgardE01Pillar006A_N.tga
+
+newmtl MI_Copper020.mat_7e742509
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Copper020_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Copper020_Normal.tga
+
+newmtl MI_Copper024
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Copper024_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Copper024_Normal.tga
+
+newmtl MI_Marble050.mat_63ef66f1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Marble050_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Marble050_Normal.tga
+
+newmtl MI_Metal042
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Metal042_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Metal042_Normal.tga

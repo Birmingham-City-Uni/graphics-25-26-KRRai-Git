@@ -217,12 +217,16 @@ int main()
 	lights.emplace_back(new AmbientLight(Eigen::Vector3f(0.1f, 0.1f, 0.1f)));
 	lights.emplace_back(new DirectionalLight(Eigen::Vector3f(0.4f, 0.4f, 0.4f), Eigen::Vector3f(1.f, 0.f, 0.0f)));
 
+	Mesh CharacterMesh9 = loadMeshFile("../models/Asgard_Floor.obj");
+	Mesh CharacterMesh8 = loadMeshFile("../models/Asgard_Pillar.obj");
+	Mesh CharacterMesh7 = loadMeshFile("../models/Asgard_Pillar.obj");
 	Mesh CharacterMesh6 = loadMeshFile("../models/Bed_Palenquin.obj");
 	Mesh CharacterMesh5 = loadMeshFile("../models/Asgard_Bed.obj");
 	Mesh CharacterMesh4 = loadMeshFile("../models/Spidey_legs3.obj");
 	Mesh CharacterMesh3 = loadMeshFile("../models/Spidey_Arms.obj");
 	Mesh CharacterMesh2 = loadMeshFile("../models/Spidey_Torso.obj");
 	Mesh CharacterMesh1 = loadMeshFile("../models/Spidey_Head.obj");
+	
 
 	std::vector<uint8_t> CharacterTexture1; unsigned int CharacterTexWidth1, CharacterTexHeight1;
 	std::vector<uint8_t> CharacterTexture2; unsigned int CharacterTexWidth2, CharacterTexHeight2;
@@ -230,34 +234,48 @@ int main()
 	std::vector<uint8_t> CharacterTexture4; unsigned int CharacterTexWidth4, CharacterTexHeight4;
 	std::vector<uint8_t> CharacterTexture5; unsigned int CharacterTexWidth5, CharacterTexHeight5;
 	std::vector<uint8_t> CharacterTexture6; unsigned int CharacterTexWidth6, CharacterTexHeight6;
+	std::vector<uint8_t> CharacterTexture7; unsigned int CharacterTexWidth7, CharacterTexHeight7;
+	std::vector<uint8_t> CharacterTexture8; unsigned int CharacterTexWidth8, CharacterTexHeight8;
+	std::vector<uint8_t> CharacterTexture9; unsigned int CharacterTexWidth9, CharacterTexHeight9;
 
 	lodepng::decode(CharacterTexture1, CharacterTexWidth1, CharacterTexHeight1, "../models/T_1036800_Head_D.png");
 	lodepng::decode(CharacterTexture2, CharacterTexWidth2, CharacterTexHeight2, "../models/T_1036800_Body_D.png");
 	lodepng::decode(CharacterTexture3, CharacterTexWidth3, CharacterTexHeight3, "../models/T_1036800_Equip_01_D.png");
 	lodepng::decode(CharacterTexture4, CharacterTexWidth4, CharacterTexHeight4, "../models/T_1036800_Equip_02_D.png");
 	lodepng::decode(CharacterTexture5, CharacterTexWidth5, CharacterTexHeight5, "../models/T_AsgardC02BuildingIND001Aa_D.png");
-	lodepng::decode(CharacterTexture6, CharacterTexWidth6, CharacterTexHeight6, "../models/Asgard_BuildingBack.png");
+	lodepng::decode(CharacterTexture6, CharacterTexWidth6, CharacterTexHeight6, "../models/DarkGold.png");
+	lodepng::decode(CharacterTexture7, CharacterTexWidth7, CharacterTexHeight7, "../models/T_AsgardE01Pillar006A_D.png");
+	lodepng::decode(CharacterTexture8, CharacterTexWidth8, CharacterTexHeight8, "../models/T_AsgardE01Pillar006A_D.png");
+	lodepng::decode(CharacterTexture9, CharacterTexWidth9, CharacterTexHeight9, "../models/Marble.png");
 
 	Eigen::Matrix4f CharacterTransform;
 
-	CharacterTransform = translationMatrix(Eigen::Vector3f(2.5f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-0.2f, -2.0f, 12.f)) * rotateYMatrix(M_PI - 0.2f);
 	drawMesh(imageBuffer, zBuffer, CharacterMesh1, CharacterTexture1, CharacterTexWidth1, CharacterTexHeight1, CharacterTransform, worldToClip, lights, width, height);
 
-	CharacterTransform = translationMatrix(Eigen::Vector3f(2.5f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-0.2f, -2.0f, 12.f)) * rotateYMatrix(M_PI - 0.2f);
 	drawMesh(imageBuffer, zBuffer, CharacterMesh2, CharacterTexture2, CharacterTexWidth2, CharacterTexHeight2, CharacterTransform, worldToClip, lights, width, height);
 
-	CharacterTransform = translationMatrix(Eigen::Vector3f(2.5f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-0.2f, -2.0f, 12.f)) * rotateYMatrix(M_PI - 0.2f);
 	drawMesh(imageBuffer, zBuffer, CharacterMesh3, CharacterTexture3, CharacterTexWidth3, CharacterTexHeight3, CharacterTransform, worldToClip, lights, width, height);
 
-	CharacterTransform = translationMatrix(Eigen::Vector3f(2.5f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-0.2f, -2.0f, 12.f)) * rotateYMatrix(M_PI - 0.2f);
 	drawMesh(imageBuffer, zBuffer, CharacterMesh4, CharacterTexture4, CharacterTexWidth4, CharacterTexHeight4, CharacterTransform, worldToClip, lights, width, height);
 
-	CharacterTransform = translationMatrix(Eigen::Vector3f(1.0f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-0.4f, -2.0f, 12.f)) * rotateYMatrix(M_PI - 0.2f);
 	drawMesh(imageBuffer, zBuffer, CharacterMesh5, CharacterTexture5, CharacterTexWidth5, CharacterTexHeight5, CharacterTransform, worldToClip, lights, width, height);
 
-	CharacterTransform = translationMatrix(Eigen::Vector3f(0.f, -2.4f, 11.f)) * rotateXMatrix(0.0f);
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-1.0f, -2.4f, 12.f)) * rotateYMatrix(M_PI - 0.2f);
 	drawMesh(imageBuffer, zBuffer, CharacterMesh6, CharacterTexture6, CharacterTexWidth6, CharacterTexHeight6, CharacterTransform, worldToClip, lights, width, height);
 
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-0.2f, -2.4f, 15.0f)) * rotateYMatrix(M_PI - 0.2f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh7, CharacterTexture7, CharacterTexWidth7, CharacterTexHeight7, CharacterTransform, worldToClip, lights, width, height);
+
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-7.0f, -3.0f, 10.0f)) * rotateYMatrix(M_PI - 0.2f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh8, CharacterTexture8, CharacterTexWidth8, CharacterTexHeight8, CharacterTransform, worldToClip, lights, width, height);
+
+	CharacterTransform = translationMatrix(Eigen::Vector3f(-0.4f, -2.4f, 12.0f)) * rotateYMatrix(M_PI - 0.2f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh9, CharacterTexture9, CharacterTexWidth9, CharacterTexHeight9, CharacterTransform, worldToClip, lights, width, height);
 	drawPointLights(imageBuffer, width, height, lights);
 
 	int errorCode = lodepng::encode(outputFilename, imageBuffer, width, height);

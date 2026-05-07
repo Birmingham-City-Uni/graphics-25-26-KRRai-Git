@@ -3,6 +3,9 @@
   "WorkspaceRootPath": "E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Builds\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{ED4547F3-8512-390B-A320-A3AE227A46B6}|Task1.vcxproj|E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Shading.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{78DFED53-5069-3143-B9CA-53A77E30DDAE}|Task2.vcxproj|E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Task2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
@@ -24,19 +27,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Shading.hpp",
+              "DocumentMoniker": "E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Shading.hpp",
+              "RelativeDocumentMoniker": "..\\Shading.hpp",
+              "ToolTip": "E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Shading.hpp",
+              "RelativeToolTip": "..\\Shading.hpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-05-07T05:29:21.779Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Task2.cpp",
               "DocumentMoniker": "E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Task2.cpp",
               "RelativeDocumentMoniker": "..\\Task2.cpp",
               "ToolTip": "E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Task2.cpp",
               "RelativeToolTip": "..\\Task2.cpp",
-              "ViewState": "AgIAANwAAAAAAAAAAAAYwD0BAABMAAAAAAAAAA==",
+              "ViewState": "AgIAACEBAAAAAAAAAAAYwAkBAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-05-06T00:51:04.943Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Light.hpp",
               "DocumentMoniker": "E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Light.hpp",
               "RelativeDocumentMoniker": "..\\Light.hpp",
@@ -48,7 +64,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Task1.cpp",
               "DocumentMoniker": "E:\\Github\\NewSpeedGame\\graphics-25-26-KRRai-Git\\Labs\\week8\\Task1.cpp",
               "RelativeDocumentMoniker": "..\\Task1.cpp",

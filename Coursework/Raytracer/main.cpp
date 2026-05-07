@@ -1,10 +1,15 @@
-#include <Eigen/Dense>
-#include <lodepng.h>
-#include <json/json.hpp>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 #include <iostream>
 #include <vector>
 #include <random>
 #include <chrono>
+#include <fstream>
+#include <Eigen/Dense>
+#include <lodepng.h>
+#include <json/json.hpp>
+
 #include "BVHNode.hpp"
 #include "Triangle.hpp"
 #include "Scene.hpp"
@@ -17,7 +22,6 @@
 #include "MirrorShader.hpp"
 #include "TexCoordTestShader.hpp"
 #include "Model.hpp"
-#include <fstream>
 
 /// <summary>
 /// Load a JSON config file using the nlohmann library.
@@ -54,7 +58,6 @@ int main(int argc, char* argv[]) {
 		pixWidth, pixHeight,
 		config["cameraFov"]);
 
-
 	std::vector<uint8_t> outImage(pixHeight * pixWidth * nChannels);
 
 	Eigen::Vector3f
@@ -79,16 +82,59 @@ int main(int argc, char* argv[]) {
 	// *** Set up scene ***
 	Scene scene;
 
-	// Optional code: here's how to add the spot mesh to the scene, using a BVH
-	// Try enabling this and comparing it to the non-BVH version below!
-	Model spotModel("../models/spot.obj");
-	scene.renderables.push_back(std::make_shared<BVHNode>(spotModel, &spotShader, 4, rotateY(M_PI / 4.0f)));
+	Model CharacterMesh1("../models/Spidey_Head.obj");
+	Model CharacterMesh2("../models/Spidey_Torso.obj");
+	Model CharacterMesh3("../models/Spidey_Arms.obj");
+	Model CharacterMesh4("../models/Spidey_legs3.obj");
+	Model CharacterMesh5("../models/Asgard_Bed.obj");
+	Model CharacterMesh6("../models/Bed_Palenquin.obj");
+	Model CharacterMesh7("../models/Asgard_Pillar.obj");
+	Model CharacterMesh8("../models/Asgard_Pillar.obj");
+	Model CharacterMesh9("../models/Asgard_Floor.obj");
 
-	// Here's how to add the mesh without using the BVH.
-	// Try comparing performance to the BVH version above.
-	//Model spotModel("../models/spot.obj");
-	//scene.renderables.push_back(std::make_shared<Mesh>(&spotShader, &spotModel));
-	//scene.renderables.back()->modelToWorld(rotateY(M_PI / 4.0f));
+	auto makeTranslation = [](float x, float y, float z) {
+		Eigen::Matrix4f T = Eigen::Matrix4f::Identity();
+		T(0, 3) = x;
+		T(1, 3) = y;
+		T(2, 3) = z;
+		return T;
+		};
+
+	auto makeRotateY = [](float angle) {
+		Eigen::Matrix4f R = Eigen::Matrix4f::Identity();
+		float c = cos(angle);
+		float s = sin(angle);
+
+		R(0, 0) = c;  R(0, 2) = s;
+		R(2, 0) = -s; R(2, 2) = c;
+
+		return R;
+		};
+
+	LambertianShader fallbackShader(red);
+
+	Eigen::Matrix4f baseTransform =
+		makeTranslation(-0.2f, -2.0f, 12.f) * makeRotateY(M_PI - 0.2f);
+
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh1, &fallbackShader, 4, baseTransform));
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh2, &fallbackShader, 4, baseTransform));
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh3, &fallbackShader, 4, baseTransform));
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh4, &fallbackShader, 4, baseTransform));
+
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh5, &fallbackShader, 4,
+		makeTranslation(-0.4f, -2.0f, 12.f) * makeRotateY(M_PI - 0.2f)));
+
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh6, &fallbackShader, 4,
+		makeTranslation(-1.0f, -2.4f, 12.f) * makeRotateY(M_PI - 0.2f)));
+
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh7, &fallbackShader, 4,
+		makeTranslation(-0.2f, -2.4f, 15.f) * makeRotateY(M_PI - 0.2f)));
+
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh8, &fallbackShader, 4,
+		makeTranslation(-7.0f, -3.0f, 10.f) * makeRotateY(M_PI - 0.2f)));
+
+	scene.renderables.push_back(std::make_shared<BVHNode>(CharacterMesh9, &fallbackShader, 4,
+		makeTranslation(-0.4f, -2.4f, 12.f) * makeRotateY(M_PI - 0.2f)));
 
 	// *** Add lights to scene ***
 	Eigen::Vector3f ambientLight(.1f, .1f, .1f);
@@ -99,8 +145,6 @@ int main(int argc, char* argv[]) {
 
 	// *** Render the scene ***
 
-	// Shuffling the scanline order gets better CPU usage between threads
-	// when some lines take longer to render than others.
 	std::vector<unsigned int> scanlines(pixHeight);
 	for (int i = 0; i < pixHeight; ++i) scanlines[i] = i;
 
@@ -112,46 +156,39 @@ int main(int argc, char* argv[]) {
 
 	auto startTime = std::chrono::steady_clock::now();
 
-	Ray ray = cam.getRay(531, 325);
-	HitInfo hitInfo;
-	scene.intersect(ray, 1e-6f, 1e6f, hitInfo, VISIBLE_BITMASK);
-	float x = hitInfo.hitT;
-
-
-	#pragma omp parallel for
+#pragma omp parallel for
 	for (int y = 0; y < pixHeight; ++y) {
 		for (int x = 0; x < pixWidth; ++x) {
+
 			Ray ray = cam.getRay(x, scanlines[y]);
 			HitInfo hitInfo;
+
 			if (scene.intersect(ray, 1e-6f, 1e6f, hitInfo, VISIBLE_BITMASK)) {
+
 				Eigen::Vector3f color = hitInfo.shader->getColor(
 					hitInfo, &scene,
 					lightSources, ambientLight,
 					0, config["maxBounces"]);
 
-				color.x() = std::min(color.x(), 1.f);
-				color.y() = std::min(color.y(), 1.f);
-				color.z() = std::min(color.z(), 1.f);
-
+				color = color.cwiseMin(1.f);
 
 				int line = (pixHeight - scanlines[y]) - 1;
-				outImage[(x + line * pixWidth) * nChannels + 0] = color.x() * 255;
-				outImage[(x + line * pixWidth) * nChannels + 1] = color.y() * 255;
-				outImage[(x + line * pixWidth) * nChannels + 2] = color.z() * 255;
+
+				outImage[(x + line * pixWidth) * nChannels + 0] = (uint8_t)(color.x() * 255);
+				outImage[(x + line * pixWidth) * nChannels + 1] = (uint8_t)(color.y() * 255);
+				outImage[(x + line * pixWidth) * nChannels + 2] = (uint8_t)(color.z() * 255);
 				outImage[(x + line * pixWidth) * nChannels + 3] = 255;
 			}
 			else {
+
 				int line = (pixHeight - scanlines[y]) - 1;
+
 				outImage[(x + line * pixWidth) * nChannels + 0] = 0;
 				outImage[(x + line * pixWidth) * nChannels + 1] = 0;
 				outImage[(x + line * pixWidth) * nChannels + 2] = 0;
 				outImage[(x + line * pixWidth) * nChannels + 3] = 255;
 			}
 		}
-		if (omp_get_thread_num() == omp_get_num_threads()-1) {
-			std::clog << "\rScanlines remaining: " << (pixHeight - y) << ' ' << std::flush;
-		}
-
 	}
 
 	auto renderTime = std::chrono::steady_clock::now() - startTime;
@@ -161,7 +198,7 @@ int main(int argc, char* argv[]) {
 	// *** Save the output image ***
 	int errorCode;
 	errorCode = lodepng::encode(config["outputFilename"], outImage, pixWidth, pixHeight);
-	if (errorCode) { // check the error code, in case an error occurred.
+	if (errorCode) {
 		std::cout << "lodepng error encoding image: " << lodepng_error_text(errorCode) << std::endl;
 		return errorCode;
 	}

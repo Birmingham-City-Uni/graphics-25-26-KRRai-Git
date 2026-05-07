@@ -1,0 +1,57 @@
+# Blender 5.0.1 MTL File: 'AsgardC03_Compressed.blend'
+# www.blender.org
+
+newmtl MI_AsgardC02Building001A_01.mat_49ac9a7c
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd H:/Asgard_BuildingBack.png
+map_Bump -bm 1.000000 C:/T_AsgardC02Building001A_01_N.tga
+
+newmtl MI_AsgardC02Building001A_02.mat_563f0aed
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_AsgardC02Building001A_02_D.tga
+map_Bump -bm 1.000000 C:/T_AsgardC02Building001A_02_N.tga
+
+newmtl MI_Copper024
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Copper024_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Copper024_Normal.tga
+
+newmtl MI_Marble011
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Marble011_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Marble011_Normal.tga
+
+newmtl MI_Metal031.mat_1aca0208
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Metal031_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Metal031_Normal.tga
