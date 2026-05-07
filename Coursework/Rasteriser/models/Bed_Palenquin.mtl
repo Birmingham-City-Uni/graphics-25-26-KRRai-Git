@@ -1,0 +1,112 @@
+# Blender 5.0.1 MTL File: 'AsgardC03_Compressed_W_Spidey.blend'
+# www.blender.org
+
+newmtl MI_Copper024
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Copper024_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Copper024_Normal.tga
+
+newmtl MI_Copper025.mat_7ae6b457
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Copper025_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Copper025_Normal.tga
+
+newmtl MI_Crystal003
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.371233 0.800000 0.740420
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Crystal003_Basecolor.tga
+map_Ns C:/T_ML_Crystal003_Roughness.tga
+map_Bump -bm 1.000000 C:/T_ML_Crystal003_Normal.tga
+
+newmtl MI_Marble002.mat_2e001e0f
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Marble002_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Marble002_Normal.tga
+
+newmtl MI_Marble019.mat_6bd95549
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Marble019_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Marble019_Normal.tga
+
+newmtl MI_Marble050.mat_63ef66f1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Marble050_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Marble050_Normal.tga
+
+newmtl MI_Metal031.mat_1aca0208
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Metal031_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Metal031_Normal.tga
+
+newmtl MI_Metal042
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Metal042_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Metal042_Normal.tga
+
+newmtl MI_Stone021.mat_60e2d4c8
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Stone021_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Stone021_Normal.tga
+
+newmtl MI_Stone022.mat_2450c806
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/T_ML_Stone022_Basecolor.tga
+map_Bump -bm 1.000000 C:/T_ML_Stone022_Normal.tga

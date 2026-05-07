@@ -21,18 +21,15 @@
 
 
 struct Triangle {
-	std::array<Eigen::Vector3f, 3> screen; // Coordinates of the triangle in screen space.
-	std::array<Eigen::Vector3f, 3> verts; // Vertices of the triangle in world space.
-	std::array<Eigen::Vector3f, 3> norms; // Normals of the triangle corners in world space.
-	std::array<Eigen::Vector2f, 3> texs; // Texture coordinates of the triangle corners.
+	std::array<Eigen::Vector3f, 3> screen;
+	std::array<Eigen::Vector3f, 3> verts;
+	std::array<Eigen::Vector3f, 3> norms;
+	std::array<Eigen::Vector2f, 3> texs;
 };
 
 
-Eigen::Matrix4f projectionMatrix(int height, int width, float horzFov = 70.f * M_PI / 180.f, float zFar = 10.f, float zNear = 0.1f)
+Eigen::Matrix4f projectionMatrix(int height, int width, float horzFov = 70.f * M_PI / 180.f, float zFar = 100.0f, float zNear = 0.1f)
 {
-	// ========= Subtask 1: Make a Projection Matrix ========
-	// *** YOUR CODE HERE ***
-
 	float aspect = (float)width / (float)height;
 	float vertFov = 2.0f * atan(tan(horzFov / 2.0f) / aspect);
 
@@ -46,24 +43,20 @@ Eigen::Matrix4f projectionMatrix(int height, int width, float horzFov = 70.f * M
 	projection(3, 2) = -1.0f;
 
 	return projection;
-	// *** END YOUR CODE ***
 }
 
 void findScreenBoundingBox(const Triangle& t, int width, int height, int& minX, int& minY, int& maxX, int& maxY)
 {
-	// Find a bounding box around the triangle
 	minX = std::min(std::min(t.screen[0].x(), t.screen[1].x()), t.screen[2].x());
 	minY = std::min(std::min(t.screen[0].y(), t.screen[1].y()), t.screen[2].y());
 	maxX = std::max(std::max(t.screen[0].x(), t.screen[1].x()), t.screen[2].x());
 	maxY = std::max(std::max(t.screen[0].y(), t.screen[1].y()), t.screen[2].y());
 
-	// Constrain it to lie within the image.
 	minX = std::min(std::max(minX, 0), width - 1);
 	maxX = std::min(std::max(maxX, 0), width - 1);
 	minY = std::min(std::max(minY, 0), height - 1);
 	maxY = std::min(std::max(maxY, 0), height - 1);
 }
-
 
 void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 	std::vector<float>& zBuffer,
@@ -77,11 +70,7 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 	Eigen::Vector2f edge1 = v2(t.screen[2] - t.screen[0]);
 	Eigen::Vector2f edge2 = v2(t.screen[1] - t.screen[0]);
 	float triangleArea = 0.5f * vec2Cross(edge2, edge1);
-	if (triangleArea < 0) {
-		// Triangle is backfacing
-		// Exit and quit drawing!
-		return;
-	}
+	if (triangleArea < 0) triangleArea = -triangleArea;
 
 	for (int x = minX; x <= maxX; ++x)
 		for (int y = minY; y <= maxY; ++y) {
@@ -96,24 +85,16 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 			float b2 = a2 / triangleArea;
 
 			float sum = b0 + b1 + b2;
-			if (sum > 1.0001) {
-				continue;
-			}
+			if (sum > 1.0001) continue;
 
 			Eigen::Vector3f worldP = t.verts[0] * b0 + t.verts[1] * b1 + t.verts[2] * b2;
-
 			float depth = t.screen[0].z() * b0 + t.screen[1].z() * b1 + t.screen[2].z() * b2;
 
 			int depthIdx = y * width + x;
-
-			if (depth > zBuffer[depthIdx]) {
-				continue;
-			}
+			if (depth > zBuffer[depthIdx]) continue;
 			zBuffer[depthIdx] = depth;
 
-			Eigen::Vector3f normP = t.norms[0] * b0 + t.norms[1] * b1 + t.norms[2] * b2;
-			normP.normalize();
-
+			Eigen::Vector3f normP = (t.norms[0] * b0 + t.norms[1] * b1 + t.norms[2] * b2).normalized();
 			Eigen::Vector2f texP = t.texs[0] * b0 + t.texs[1] * b1 + t.texs[2] * b2;
 
 			int texC = (int)(texP.x() * texWidth);
@@ -125,26 +106,17 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 			Color texColor = getPixel(albedoTexture, texC, texR, texWidth, texHeight);
 
 			Eigen::Vector3f albedo;
-			albedo << texColor.r / 255.0f,
-				texColor.g / 255.0f,
-				texColor.b / 255.0f;
+			albedo << texColor.r / 255.0f, texColor.g / 255.0f, texColor.b / 255.0f;
 			albedo = albedo.array().pow(2.2f);
 
 			Eigen::Vector3f color = Eigen::Vector3f::Zero();
 
 			for (auto& light : lights) {
-
 				Eigen::Vector3f lightIntensity = light->getIntensityAt(worldP);
-
 				if (light->getType() != Light::Type::AMBIENT) {
-
-					float dotProd = normP.dot(-light->getDirection(worldP));
-
-					dotProd = std::max(dotProd, 0.0f);
-
+					float dotProd = std::max(normP.dot(-light->getDirection(worldP)), 0.0f);
 					lightIntensity *= dotProd;
 				}
-
 				color += coeffWiseMultiply(lightIntensity, albedo);
 			}
 
@@ -152,14 +124,11 @@ void drawTriangle(std::vector<uint8_t>& image, int width, int height,
 			c.r = std::min(powf(color.x(), 1 / 2.2f), 1.0f) * 255;
 			c.g = std::min(powf(color.y(), 1 / 2.2f), 1.0f) * 255;
 			c.b = std::min(powf(color.z(), 1 / 2.2f), 1.0f) * 255;
-
 			c.a = 255;
 
 			setPixel(image, x, y, width, height, c);
 		}
 }
-
-
 
 void drawMesh(std::vector<unsigned char>& image,
 	std::vector<float>& zBuffer,
@@ -220,63 +189,78 @@ void drawMesh(std::vector<unsigned char>& image,
 	}
 }
 
-
 int main()
 {
 	std::string outputFilename = "output.png";
 
-	const int width = 512, height = 512;
+	const int width = 1920, height = 1080;
 	const int nChannels = 4;
 
 	std::vector<uint8_t> imageBuffer(height * width * nChannels);
 	std::vector<float> zBuffer(height * width);
 
 	Color black{ 0,0,0,255 };
-	for (int r = 0; r < height; ++r) {
+	for (int r = 0; r < height; ++r)
 		for (int c = 0; c < width; ++c) {
 			setPixel(imageBuffer, c, r, width, height, black);
-			zBuffer[r * width + c] = 1.0f;
+			zBuffer[r * width + c] = 1e9f;
 		}
-	}
 
 	Eigen::Matrix4f projection = projectionMatrix(height, width);
 
-	Eigen::Matrix4f cameraToWorld = translationMatrix(Eigen::Vector3f(0.f, 0.8f, 0.0f)) * rotateXMatrix(0.4f) * rotateYMatrix(M_PI);
+	Eigen::Matrix4f cameraToWorld =translationMatrix(Eigen::Vector3f(0.f, 0.8f, 0.0f));
 
-	Eigen::Matrix4f worldToCamera = cameraToWorld.inverse();
+	Eigen::Matrix4f worldToCamera = rotateYMatrix(M_PI) * cameraToWorld.inverse();
 	Eigen::Matrix4f worldToClip = projection * worldToCamera;
-
-	std::string bunnyFilename = "../models/stanford_bunny_texmapped.obj";
 
 	std::vector<std::unique_ptr<Light>> lights;
 	lights.emplace_back(new AmbientLight(Eigen::Vector3f(0.1f, 0.1f, 0.1f)));
 	lights.emplace_back(new DirectionalLight(Eigen::Vector3f(0.4f, 0.4f, 0.4f), Eigen::Vector3f(1.f, 0.f, 0.0f)));
 
-	Mesh bunnyMesh = loadMeshFile(bunnyFilename);
+	Mesh CharacterMesh6 = loadMeshFile("../models/Bed_Palenquin.obj");
+	Mesh CharacterMesh5 = loadMeshFile("../models/Asgard_Bed.obj");
+	Mesh CharacterMesh4 = loadMeshFile("../models/Spidey_legs3.obj");
+	Mesh CharacterMesh3 = loadMeshFile("../models/Spidey_Arms.obj");
+	Mesh CharacterMesh2 = loadMeshFile("../models/Spidey_Torso.obj");
+	Mesh CharacterMesh1 = loadMeshFile("../models/Spidey_Head.obj");
 
-	Eigen::Matrix4f bunnyTransform;
+	std::vector<uint8_t> CharacterTexture1; unsigned int CharacterTexWidth1, CharacterTexHeight1;
+	std::vector<uint8_t> CharacterTexture2; unsigned int CharacterTexWidth2, CharacterTexHeight2;
+	std::vector<uint8_t> CharacterTexture3; unsigned int CharacterTexWidth3, CharacterTexHeight3;
+	std::vector<uint8_t> CharacterTexture4; unsigned int CharacterTexWidth4, CharacterTexHeight4;
+	std::vector<uint8_t> CharacterTexture5; unsigned int CharacterTexWidth5, CharacterTexHeight5;
+	std::vector<uint8_t> CharacterTexture6; unsigned int CharacterTexWidth6, CharacterTexHeight6;
 
-	std::vector<uint8_t> bunnyTexture;
-	unsigned int bunnyTexWidth, bunnyTexHeight;
-	lodepng::decode(bunnyTexture, bunnyTexWidth, bunnyTexHeight, "../models/stanford_bunny_albedo.png");
+	lodepng::decode(CharacterTexture1, CharacterTexWidth1, CharacterTexHeight1, "../models/T_1036800_Head_D.png");
+	lodepng::decode(CharacterTexture2, CharacterTexWidth2, CharacterTexHeight2, "../models/T_1036800_Body_D.png");
+	lodepng::decode(CharacterTexture3, CharacterTexWidth3, CharacterTexHeight3, "../models/T_1036800_Equip_01_D.png");
+	lodepng::decode(CharacterTexture4, CharacterTexWidth4, CharacterTexHeight4, "../models/T_1036800_Equip_02_D.png");
+	lodepng::decode(CharacterTexture5, CharacterTexWidth5, CharacterTexHeight5, "../models/T_AsgardC02BuildingIND001Aa_D.png");
+	lodepng::decode(CharacterTexture6, CharacterTexWidth6, CharacterTexHeight6, "../models/Asgard_BuildingBack.png");
 
-	bunnyTransform = translationMatrix(Eigen::Vector3f(-1.0f, -1.0f, 3.f)) * rotateYMatrix(0.0f) * rotateXMatrix(0.8f);
-	drawMesh(imageBuffer, zBuffer, bunnyMesh, bunnyTexture, bunnyTexWidth, bunnyTexHeight, bunnyTransform, worldToClip, lights, width, height);
-	bunnyTransform = translationMatrix(Eigen::Vector3f(-1.0f, -1.0f, 5.f)) * rotateYMatrix(0.0f) * rotateXMatrix(0.8f);
-	drawMesh(imageBuffer, zBuffer, bunnyMesh, bunnyTexture, bunnyTexWidth, bunnyTexHeight, bunnyTransform, worldToClip, lights, width, height);
-	bunnyTransform = translationMatrix(Eigen::Vector3f(-1.0f, -1.0f, 7.f)) * rotateYMatrix(0.0f) * rotateXMatrix(0.8f);
-	drawMesh(imageBuffer, zBuffer, bunnyMesh, bunnyTexture, bunnyTexWidth, bunnyTexHeight, bunnyTransform, worldToClip, lights, width, height);
-	bunnyTransform = translationMatrix(Eigen::Vector3f(1.0f, -1.0f, 3.f)) * rotateYMatrix(0.0f) * rotateXMatrix(0.8f);
-	drawMesh(imageBuffer, zBuffer, bunnyMesh, bunnyTexture, bunnyTexWidth, bunnyTexHeight, bunnyTransform, worldToClip, lights, width, height);
-	bunnyTransform = translationMatrix(Eigen::Vector3f(1.0f, -1.0f, 5.f)) * rotateYMatrix(0.0f) * rotateXMatrix(0.8f);
-	drawMesh(imageBuffer, zBuffer, bunnyMesh, bunnyTexture, bunnyTexWidth, bunnyTexHeight, bunnyTransform, worldToClip, lights, width, height);
-	bunnyTransform = translationMatrix(Eigen::Vector3f(1.0f, -1.0f, 7.f)) * rotateYMatrix(0.0f) * rotateXMatrix(0.8f);
-	drawMesh(imageBuffer, zBuffer, bunnyMesh, bunnyTexture, bunnyTexWidth, bunnyTexHeight, bunnyTransform, worldToClip, lights, width, height);
+	Eigen::Matrix4f CharacterTransform;
+
+	CharacterTransform = translationMatrix(Eigen::Vector3f(2.5f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh1, CharacterTexture1, CharacterTexWidth1, CharacterTexHeight1, CharacterTransform, worldToClip, lights, width, height);
+
+	CharacterTransform = translationMatrix(Eigen::Vector3f(2.5f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh2, CharacterTexture2, CharacterTexWidth2, CharacterTexHeight2, CharacterTransform, worldToClip, lights, width, height);
+
+	CharacterTransform = translationMatrix(Eigen::Vector3f(2.5f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh3, CharacterTexture3, CharacterTexWidth3, CharacterTexHeight3, CharacterTransform, worldToClip, lights, width, height);
+
+	CharacterTransform = translationMatrix(Eigen::Vector3f(2.5f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh4, CharacterTexture4, CharacterTexWidth4, CharacterTexHeight4, CharacterTransform, worldToClip, lights, width, height);
+
+	CharacterTransform = translationMatrix(Eigen::Vector3f(1.0f, -2.0f, 10.f)) * rotateXMatrix(0.0f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh5, CharacterTexture5, CharacterTexWidth5, CharacterTexHeight5, CharacterTransform, worldToClip, lights, width, height);
+
+	CharacterTransform = translationMatrix(Eigen::Vector3f(0.f, -2.4f, 11.f)) * rotateXMatrix(0.0f);
+	drawMesh(imageBuffer, zBuffer, CharacterMesh6, CharacterTexture6, CharacterTexWidth6, CharacterTexHeight6, CharacterTransform, worldToClip, lights, width, height);
 
 	drawPointLights(imageBuffer, width, height, lights);
 
-	int errorCode;
-	errorCode = lodepng::encode(outputFilename, imageBuffer, width, height);
+	int errorCode = lodepng::encode(outputFilename, imageBuffer, width, height);
 	if (errorCode) {
 		std::cout << "lodepng error encoding image: " << lodepng_error_text(errorCode) << std::endl;
 		return errorCode;
